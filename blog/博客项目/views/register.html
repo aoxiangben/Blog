@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>注册用户</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="../node_modules/bootstrap3/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="../public/css/register.css">
+</head>
+<body>
+<div class="main">
+    <div class="header">
+        <h1>用户注册</h1>
+    </div>
+    <form id="register_form">
+        <div>
+            <label for="email">邮箱</label>
+            <input type="email" class="form-control" id="email" name="email" placeholder="email">
+        </div>
+        <div>
+            <label for="nickname">昵称</label>
+            <input type="text" class="form-control" id="nickname" name="nickname" placeholder="nickname">
+        </div>
+        <div>
+            <label for="password">密码</label>
+            <input type="password" class="form-control" id="password" name="password" placeholder="password">
+        </div>
+        <button type="submit" class="btn btn-success btn-block">注册</button>
+        <div class="message">
+            <p>已有账号？<a href="/login">点击登陆</a></p>
+        </div>
+    </form>
+</div>
+<script src="../node_modules/jquery/dist/jquery.js"></script>
+<script src="../node_modules/bootstrap3/dist/js/bootstrap.js"></script>
+<script>
+    $('#register_form').on('submit',function (e) {
+        e.preventDefault();//阻止默认提交方法
+        var formData = $(this).serialize() ;//获取表单数据
+        console.log(formData);
+        $.ajax({
+            url:'/register',
+            type:'post',
+            data:formData,
+            dataType:'json',
+            success:function (data) {
+                var err_code = data.err_code;
+                if (err_code === 0) {
+                    window.alert('注册成功');
+                    //异步提交重定向
+                    window.location.href = '/'
+                } else if (err_code === 1) {
+                    window.alert('邮箱或昵称已存在！')
+                } else if (err_code === 500) {
+                    window.alert('服务器忙，请稍后重试！')
+                }
+            }
+        })
+    })
+</script>
+
+
+</body>
+</html>

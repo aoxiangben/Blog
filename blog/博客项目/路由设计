@@ -1,0 +1,7 @@
+路径          方法           post参数                 备注
+/              get                                    渲染首页
+/register      get                                    渲染注册页面
+/register      post           email，nikename，password  处理注册请求
+/login         get                                    渲染登陆页面
+/login         post          Email，password          处理登陆请求
+/logout        get                                     处理退出请求
